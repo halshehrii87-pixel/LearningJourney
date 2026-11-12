@@ -94,11 +94,39 @@ struct ActivityView: View {
                 }
             }
             
-            //  بطاقتين الإحصائيات
+            //   بطاقتين الإحصائيات حقت ال days
             HStack(spacing: 12) {
                 StatCard(icon: "flame.fill", iconColor: Color("AppOrange"), value: 4, label: "Learned")
                 StatCard(icon: "snowflake", iconColor: .cyan, value: 0, label: "Freezed")
             }
+            Spacer()
+
+            // الدايرة الكبيرة: Log as Learned
+            Button { } label: {
+                Text("Log as Learned")
+                    .font(.headline)
+                    .foregroundStyle(.white)
+                    .frame(width: 260, height: 260)
+                    .background(Color("AppOrange"), in: Circle())
+            }
+            .frame(maxWidth: .infinity)
+
+            Spacer()
+
+            // زر Freeze
+            //هنا حجم الزر تعدل واضفت العرض حقه
+            Button { } label: {
+                Text("Freeze for a day")
+                    .frame(width: 272, height: 46)
+            }
+            .glassButton(tint: .cyan)
+            .frame(maxWidth: .infinity)
+
+            Text("0 out of 2 Freezes used")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity)
+            
             Spacer()
         }
         .padding()

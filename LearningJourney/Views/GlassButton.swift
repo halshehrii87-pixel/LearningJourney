@@ -1,14 +1,16 @@
 import SwiftUI
 
 extension View {
-    // أمر جاهز نناديه على أي زر: .glassButton()
+    // الأمر الثابت لكل أزرار الزجاج في التطبيق
+    // selected: هل الزر مختار؟ (برتقالي) أو عادي (رمادي غامق)
+    // tint: لون الزجاج، الافتراضي برتقالي AppOrange
     @ViewBuilder
-    func glassButton(selected: Bool = true) -> some View {
+    func glassButton(selected: Bool = true, tint: Color = Color("AppOrange")) -> some View {
         if selected {
-            // زجاج معبّى برتقالي (للزر الرئيسي أو الخيار المختار)
+            // زجاج معبّى باللون (مثل زر Start Learning)
             self
                 .buttonStyle(.glassProminent)
-                .tint(Color("AppOrange"))
+                .tint(tint)
         } else {
             // زجاج عادي غامق (للخيارات غير المختارة)
             self
