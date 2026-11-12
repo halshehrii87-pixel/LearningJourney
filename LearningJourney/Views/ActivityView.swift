@@ -93,12 +93,43 @@ struct ActivityView: View {
                     //على كل عمود: عشان يوزّع لي الـ 7 أعمدة بالتساوي على عرض الشاشة 
                 }
             }
+            
+            //  بطاقتين الإحصائيات
+            HStack(spacing: 12) {
+                StatCard(icon: "flame.fill", iconColor: Color("AppOrange"), value: 4, label: "Learned")
+                StatCard(icon: "snowflake", iconColor: .cyan, value: 0, label: "Freezed")
+            }
             Spacer()
         }
         .padding()
     }
 }
+struct StatCard: View {
+    let icon: String
+    let iconColor: Color
+    let value: Int
+    let label: String
 
+    // لو الرقم 1 نكتب day، وغير كذا days (حسب ملاحظة التصميم)
+    private var unit: String {
+        value == 1 ? "day" : "days"
+    }
+
+    var body: some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .foregroundStyle(iconColor)
+            Text("\(Text("\(value)").fontWeight(.bold)) \(unit)")
+                .font(.subheadline)
+            Text(label)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 16)
+        .glassEffect(in: .rect(cornerRadius: 24))
+    }
+}
 #Preview {
     ActivityView()
 }
