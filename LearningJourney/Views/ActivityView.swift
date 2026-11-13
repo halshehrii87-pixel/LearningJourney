@@ -102,17 +102,20 @@ struct ActivityView: View {
             Spacer()
 
             // الدايرة الكبيرة: Log as Learned
+            //استدعاءglassEffect
             Button { } label: {
                 Text("Log as Learned")
                     .font(.headline)
                     .foregroundStyle(.white)
-                    .frame(width: 260, height: 260)
+                    .frame(width: 273, height: 273)
                     .background(Color("AppOrange"), in: Circle())
+                    .glassEffect(.regular, in: Circle())
             }
+            .buttonStyle(.plain)
             .frame(maxWidth: .infinity)
 
             Spacer()
-
+            
             // زر Freeze
             //هنا حجم الزر تعدل واضفت العرض حقه
             Button { } label: {
