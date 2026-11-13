@@ -1,14 +1,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @State private var subject = ""
-    //هنا الصندوق الي يكتب فيه اليوزر وش يبغي يتعلم
-    @State private var selectedDuration = "Week"
-    //هنا الازرار الثلاه الي يضغطها المستخدم
-    private let durations = ["Week", "Month", "Year"]
-    // هنا القائمة باخيارات الثلاثه
-    //يعني الشاشة هذي بس تستخدمه
-    
+    @StateObject private var viewModel = GoalViewModel()
  var body: some View {
      ZStack(alignment: .top) {
          Image(systemName: "flame.fill")
@@ -39,8 +32,7 @@ struct OnboardingView: View {
                  .font(.system(size: 16))
                  .padding(.top, 24)
              
-             TextField("Swift", text: $subject)
-             Divider()
+             TextField("Swift", text: $viewModel.subject)            
              
              //"Swift" الكلام الباهت اللي يختفي لما يكتب اليوزر.
              //علامة $ تربط الخانة بالصندوق: كل حرف يكتبه اليوزر ينحفظ في
@@ -50,30 +42,16 @@ struct OnboardingView: View {
                  .padding(.top, 16)
              
              HStack(spacing: 12) {
-                 //"HStack" صندوق أفقي يرتب لي العناصر جنب بعض بالملي
-                 //"ForEach" هنا حلقة تكرار عشان ما اجلس اعيد الكود في كل مره
-                 
-                 ForEach(durations, id: \.self) { duration in
+                 ForEach(viewModel.durations, id: \.self) { duration in
                      Button {
-                         // هنا زر فعلي وواحد على شكل زر اخياري اليوزر يضغطه "Button"
-                         //"selectedDuration"لما المستخدم يضغط الزر، احفظ لي إن هذا هو الي اختارة
-                         // هنا معناه "إذا هذا الزر هو الي اختارة اليوزر خليه برتقالي، وإلا رمادي
-                         
-                         selectedDuration = duration
+                         viewModel.selectedDuration = duration
                      } label: {
-                         
-                         Button {
-                             
-                             selectedDuration = duration
-                         } label: {
-                             Text(duration)
-                                 .padding(.horizontal, 12)
-                                 .padding(.vertical, 4)
-                                 .foregroundStyle(selectedDuration == duration ? .white : .secondary)
-                         }
-                         .glassButton(selected: selectedDuration == duration)
-                     
+                         Text(duration)
+                             .padding(.horizontal, 12)
+                             .padding(.vertical, 4)
+                             .foregroundStyle(viewModel.selectedDuration == duration ? .white : .secondary)
                      }
+                     .glassButton(selected: viewModel.selectedDuration == duration)
                  }
              }
              
