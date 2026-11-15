@@ -7,7 +7,7 @@ final class ActivityViewModel: ObservableObject {
 
     // الأرقام اللي تظهر في البطاقتين (نبدأ بقيم التصميم)
     //  يحفظ رقم أيام التعلّم إذا تغيّر، أي شاشة تراقبه تتحدّث لحالها
-    @Published var learnedDays = 4
+    @Published var learnedDays = 0
     @Published var freezedDays = 0
 
     // حالة اليوم الحالي

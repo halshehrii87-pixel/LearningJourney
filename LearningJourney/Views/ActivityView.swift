@@ -5,7 +5,11 @@ struct ActivityView: View {
     // بيانات الايام حق التقويم الي فوق
     // الحروف وأرقام الأيام، وأي يوم هو اليوم، وأي أيام تعلّم فيه اليوزر
     
+    //هنا سويت ربط للفيو مودل
+    @StateObject private var viewModel = ActivityViewModel()
     private let weekLetters = ["S", "M", "T", "W", "T", "F", "S"]
+    
+    
     private let weekDays = [20, 21, 22, 23, 24, 25, 26]
     private let today = 24
     private let learnedDays = [20, 21, 22, 23]
@@ -95,9 +99,10 @@ struct ActivityView: View {
             }
             
             //   بطاقتين الإحصائيات حقت ال days
+            // هنا سويت ربط بين فيو و فيو موديل
             HStack(spacing: 12) {
-                StatCard(icon: "flame.fill", iconColor: Color("AppOrange"), value: 4, label: "Learned")
-                StatCard(icon: "snowflake", iconColor: .cyan, value: 0, label: "Freezed")
+                StatCard(icon: "flame.fill", iconColor: Color("AppOrange"), value: viewModel.learnedDays, label: "Learned")
+                StatCard(icon: "snowflake", iconColor: .cyan, value: viewModel.freezedDays, label: "Freezed")
             }
             Spacer()
 
