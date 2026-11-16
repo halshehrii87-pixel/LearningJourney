@@ -7,9 +7,8 @@ struct ActivityView: View {
     
     //هنا سويت ربط للفيو مودل
     @StateObject private var viewModel = ActivityViewModel()
+    @State private var showGoal = false
     private let weekLetters = ["S", "M", "T", "W", "T", "F", "S"]
-    
-    
     private let weekDays = [20, 21, 22, 23, 24, 25, 26]
     private let today = 24
     private let learnedDays = [20, 21, 22, 23]
@@ -63,8 +62,9 @@ struct ActivityView: View {
                 .buttonBorderShape(.circle)
                 
 //هنا استدعاء ايقونه القلم
-                Button { } label: {
-                    Image(systemName: "pencil.and.outline")
+                Button {
+                    showGoal = true
+                } label: {                    Image(systemName: "pencil.and.outline")
                 }
                 .glassButton(selected: false)
                 .buttonBorderShape(.circle)
@@ -136,13 +136,17 @@ struct ActivityView: View {
             .disabled(!viewModel.canFreeze)
             .frame(maxWidth: .infinity)
 
-            Text(viewModel.freezeStatus)                .font(.caption)
+            Text(viewModel.freezeStatus)
+                .font(.caption)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity)
             
             Spacer()
         }
         .padding()
+        .navigationDestination(isPresented: $showGoal) {
+            LearningGoalView(viewModel: GoalViewModel())
+        }
     }
 }
 struct StatCard: View {
@@ -151,7 +155,7 @@ struct StatCard: View {
     let value: Int
     let label: String
 
-    // لو الرقم 1 نكتب day، وغير كذا days (حسب ملاحظة التصميم)
+    // لو الرقم 1 نكتب day، وغير كذا days
     private var unit: String {
         value == 1 ? "day" : "days"
     }
