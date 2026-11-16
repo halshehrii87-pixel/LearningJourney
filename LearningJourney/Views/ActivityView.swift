@@ -136,8 +136,7 @@ struct ActivityView: View {
             .disabled(!viewModel.canFreeze)
             .frame(maxWidth: .infinity)
 
-            Text("0 out of 2 Freezes used")
-                .font(.caption)
+            Text(viewModel.freezeStatus)                .font(.caption)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity)
             
