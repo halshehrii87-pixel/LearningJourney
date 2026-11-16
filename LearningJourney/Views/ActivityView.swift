@@ -8,6 +8,7 @@ struct ActivityView: View {
     //هنا سويت ربط للفيو مودل
     @StateObject private var viewModel = ActivityViewModel()
     @State private var showGoal = false
+    @ObservedObject var goalViewModel: GoalViewModel
     private let weekLetters = ["S", "M", "T", "W", "T", "F", "S"]
     private let weekDays = [20, 21, 22, 23, 24, 25, 26]
     private let today = 24
@@ -145,7 +146,7 @@ struct ActivityView: View {
         }
         .padding()
         .navigationDestination(isPresented: $showGoal) {
-            LearningGoalView(viewModel: GoalViewModel())
+            LearningGoalView(viewModel: goalViewModel)
         }
     }
 }
@@ -176,5 +177,5 @@ struct StatCard: View {
     }
 }
 #Preview {
-    ActivityView()
+    ActivityView(goalViewModel: GoalViewModel())
 }

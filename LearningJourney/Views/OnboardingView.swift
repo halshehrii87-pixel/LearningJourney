@@ -74,8 +74,9 @@ struct OnboardingView: View {
          }
          .padding()
          .padding(.top, 100)
+         
          .navigationDestination(isPresented: $goToActivity) {
-             ActivityView()
+             ActivityView(goalViewModel: viewModel)
                  .navigationBarBackButtonHidden(true)
          }
          //180 هذا حق الايقونه مسافه بين الخط و الشكل
