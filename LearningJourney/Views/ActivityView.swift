@@ -152,8 +152,8 @@ struct ActivityView: View {
             LearningGoalView(viewModel: goalViewModel)
         }
         .navigationDestination(isPresented: $showCalendar) {
-            CalendarView(learnedDays: [], frozenDays: [])
-        }
+            //نمرر القوائم للتقويم
+            CalendarView(learnedDays: viewModel.learnedDates, frozenDays: viewModel.frozenDates)        }
     }
 }
 struct StatCard: View {

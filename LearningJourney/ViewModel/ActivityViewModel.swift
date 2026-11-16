@@ -13,6 +13,14 @@ final class ActivityViewModel: ObservableObject {
     // حالة اليوم الحالي
     @Published var isLoggedToday = false
     @Published var isFreezedToday = false
+    
+    @Published var learnedDates: [DateComponents] = []
+    @Published var frozenDates: [DateComponents] = []
+    
+    // تاريخ اليوم (سنة، شهر، يوم) عشان نحفظه
+    private var todayComponents: DateComponents {
+        Calendar(identifier: .gregorian).dateComponents([.year, .month, .day], from: Date())
+    }
 
     // الحد الأقصى للـ Freezes (2 للأسبوع، نربطه بالهدف لاحقاً)
     let maxFreezes = 2
@@ -66,16 +74,22 @@ final class ActivityViewModel: ObservableObject {
     // لما المستخدم يضغط الدايرة الكبيرة
     // أمر يسوّي شغلتين: يعلّم اليوم، ويزيد عدّاد الأيام
     //* إذا الشرط غلط، "وقّف وما تسوي شي" وهذا يمنع تسجيل الهدف نفس اليوم مرتين*
+    //
+    //حفظ اليوم لما تضغطين Log as Learned
     func logAsLearned() {
         guard !isLoggedToday else { return }
         isLoggedToday = true
         learnedDays += 1
+        learnedDates.append(todayComponents)
     }
 
     // لما المستخدم يضغط Freeze
+    //
+    //احفظ يوم الـ Freeze
     func freezeToday() {
         guard canFreeze else { return }
         isFreezedToday = true
         freezedDays += 1
+        frozenDates.append(todayComponents)
     }
 }
