@@ -10,9 +10,9 @@ struct ActivityView: View {
     @State private var showGoal = false
     @ObservedObject var goalViewModel: GoalViewModel
     private let weekLetters = ["S", "M", "T", "W", "T", "F", "S"]
-    private let weekDays = [20, 21, 22, 23, 24, 25, 26]
-    private let today = 24
-    private let learnedDays = [20, 21, 22, 23]
+    private var weekDays: [Int] { viewModel.weekDays }
+    private var today: Int { viewModel.todayNumber }
+    private let learnedDays: [Int] = []
 
     
     // لون الدائرة ححقت التاريخ حسب نوع اليوم

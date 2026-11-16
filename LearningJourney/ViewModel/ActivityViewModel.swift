@@ -47,6 +47,22 @@ final class ActivityViewModel: ObservableObject {
         return formatter.string(from: Date())
     }
 
+    // أرقام أيام الأسبوع الحالي (من الأحد إلى السبت)
+    var weekDays: [Int] {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.firstWeekday = 1   // الأسبوع يبدأ من الأحد
+        guard let weekStart = calendar.dateInterval(of: .weekOfYear, for: Date())?.start else { return [] }
+        return (0..<7).compactMap { offset in
+            calendar.date(byAdding: .day, value: offset, to: weekStart)
+                .map { calendar.component(.day, from: $0) }
+        }
+    }
+
+    // رقم يوم اليوم (مثلاً 16)
+    var todayNumber: Int {
+        Calendar(identifier: .gregorian).component(.day, from: Date())
+    }
+
     // لما المستخدم يضغط الدايرة الكبيرة
     // أمر يسوّي شغلتين: يعلّم اليوم، ويزيد عدّاد الأيام
     //* إذا الشرط غلط، "وقّف وما تسوي شي" وهذا يمنع تسجيل الهدف نفس اليوم مرتين*
