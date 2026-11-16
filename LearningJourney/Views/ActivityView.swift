@@ -108,26 +108,32 @@ struct ActivityView: View {
 
             // الدايرة الكبيرة: Log as Learned
             //استدعاءglassEffect
-            Button { } label: {
-                Text("Log as Learned")
+            Button {
+                viewModel.logAsLearned()
+            } label: {
+                Text(viewModel.logTitle)
                     .font(.headline)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(viewModel.isLoggedToday ? .gray : .white)
                     .frame(width: 273, height: 273)
-                    .background(Color("AppOrange"), in: Circle())
+                    .background(viewModel.isLoggedToday ? Color.gray.opacity(0.25) : Color("AppOrange"), in: Circle())
                     .glassEffect(.regular, in: Circle())
             }
             .buttonStyle(.plain)
+            .disabled(viewModel.isLoggedToday)
             .frame(maxWidth: .infinity)
-
-            Spacer()
+            //هنا سويت ربط وحذفت الكود الي قبل
             
             // زر Freeze
             //هنا حجم الزر تعدل واضفت العرض حقه
-            Button { } label: {
-                Text("Freeze for a day")
-                    .frame(width: 272, height: 46)
+            Button {
+                viewModel.freezeToday()
+            } label: {
+                Text(viewModel.freezeTitle)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
             }
-            .glassButton(tint: .cyan)
+            .glassButton(selected: viewModel.canFreeze, tint: .cyan)
+            .disabled(!viewModel.canFreeze)
             .frame(maxWidth: .infinity)
 
             Text("0 out of 2 Freezes used")
