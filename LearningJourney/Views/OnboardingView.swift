@@ -2,6 +2,7 @@ import SwiftUI
 
 struct OnboardingView: View {
     @StateObject private var viewModel = GoalViewModel()
+    @State private var goToActivity = false
  var body: some View {
      ZStack(alignment: .top) {
          Image(systemName: "flame.fill")
@@ -58,8 +59,7 @@ struct OnboardingView: View {
              Spacer()
              
              Button {
-                 // نضيف الفعل لاحقاً
-             } label: {
+                 goToActivity = true             } label: {
                  Text("Start Learning")
                      .padding(.horizontal, 24)
                      .padding(.vertical, 6)
@@ -74,6 +74,10 @@ struct OnboardingView: View {
          }
          .padding()
          .padding(.top, 100)
+         .navigationDestination(isPresented: $goToActivity) {
+             ActivityView()
+                 .navigationBarBackButtonHidden(true)
+         }
          //180 هذا حق الايقونه مسافه بين الخط و الشكل
          //.padding() يعطي الشاشة كلها مسافة من الأطراف
      }
