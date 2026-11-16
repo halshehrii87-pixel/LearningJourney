@@ -8,6 +8,7 @@ struct ActivityView: View {
     //هنا سويت ربط للفيو مودل
     @StateObject private var viewModel = ActivityViewModel()
     @State private var showGoal = false
+    @State private var showCalendar = false
     @ObservedObject var goalViewModel: GoalViewModel
     private let weekLetters = ["S", "M", "T", "W", "T", "F", "S"]
     private var weekDays: [Int] { viewModel.weekDays }
@@ -55,9 +56,11 @@ struct ActivityView: View {
                 }
 
                 Spacer()
-
-                Button { } label: {
-                    Image(systemName: "calendar")
+                
+//هنا زر الكالندر
+                Button {
+                    showCalendar = true
+                } label: {                    Image(systemName: "calendar")
                 }
                 .glassButton(selected: false)
                 .buttonBorderShape(.circle)
@@ -147,6 +150,9 @@ struct ActivityView: View {
         .padding()
         .navigationDestination(isPresented: $showGoal) {
             LearningGoalView(viewModel: goalViewModel)
+        }
+        .navigationDestination(isPresented: $showCalendar) {
+            CalendarView(learnedDays: [], frozenDays: [])
         }
     }
 }
