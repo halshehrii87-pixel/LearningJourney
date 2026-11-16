@@ -49,8 +49,8 @@ struct ActivityView: View {
                     Text("Activity")
                         .font(.largeTitle)
                         .bold()
-                    Text("Thursday, 24 October")
-                        .font(.subheadline)
+                    // viewModelهنا ربط تغيير التاريخ بشاشة ال
+                    Text(viewModel.todayTitle)                        .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
 

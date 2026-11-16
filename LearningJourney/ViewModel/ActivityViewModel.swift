@@ -39,6 +39,14 @@ final class ActivityViewModel: ObservableObject {
         "\(freezedDays) out of \(maxFreezes) Freezes used"
     }
 
+    // تاريخ اليوم الحقيقي بصيغة: Monday, 16 November
+    var todayTitle: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
+        formatter.dateFormat = "EEEE, d MMMM"
+        return formatter.string(from: Date())
+    }
+
     // لما المستخدم يضغط الدايرة الكبيرة
     // أمر يسوّي شغلتين: يعلّم اليوم، ويزيد عدّاد الأيام
     //* إذا الشرط غلط، "وقّف وما تسوي شي" وهذا يمنع تسجيل الهدف نفس اليوم مرتين*
