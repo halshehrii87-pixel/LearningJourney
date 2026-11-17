@@ -47,18 +47,33 @@ struct LearningGoalView: View {
             .padding()
             .navigationTitle("Learning Goal")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                    }
+                    // دائرة زجاج عادية بدون تكبير عند الضغط
+                    .glassIconButton()
+                }
+                // يخفي الخلفية الافتراضية من النظام
+                .sharedBackgroundVisibility(.hidden)
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        //يرسمون الشريط الفوقي، وفيه العنوان وزر ✓
                         showAlert = true
-                        
                     } label: {
                         Image(systemName: "checkmark")
                     }
-                    .glassButton()
+                    // دائرة زجاج برتقالية بدون تكبير عند الضغط
+                    .glassIconButton(tint: Color("AppOrange"))
+                    // يتعطل الزر إذا ما كتبتي هدف
                     .disabled(!viewModel.isGoalValid)
                 }
+                // يخفي الخلفية الزجاجية الافتراضية من النظام عشان ما تصير زجاجين فوق بعض
+                .sharedBackgroundVisibility(.hidden)
             }
             .alert("Update goal", isPresented: $showAlert) {
                 //تنبيه Update goal الجاهز من آبل، مع زرّي Dismiss وUpdate

@@ -62,16 +62,13 @@ struct ActivityView: View {
                     showCalendar = true
                 } label: {                    Image(systemName: "calendar")
                 }
-                .glassButton(selected: false)
-                .buttonBorderShape(.circle)
-                
+                .glassIconButton()
 //هنا استدعاء ايقونه القلم
                 Button {
                     showGoal = true
                 } label: {                    Image(systemName: "pencil.and.outline")
                 }
-                .glassButton(selected: false)
-                .buttonBorderShape(.circle)
+                .glassIconButton()
             }
             // صف أيام الأسبوع
             HStack {
