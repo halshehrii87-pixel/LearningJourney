@@ -18,4 +18,12 @@ final class GoalViewModel: ObservableObject {
         default: return 96
         }
     }
+    // كم يوم لازم نتعلم عشان يكتمل الهدف
+    var goalDays: Int {
+        switch selectedDuration {
+        case "Week": return 7
+        case "Month": return 30
+        default: return 365
+        }
+    }
 }

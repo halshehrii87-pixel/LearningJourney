@@ -17,6 +17,9 @@ final class ActivityViewModel: ObservableObject {
     @Published var learnedDates: [DateComponents] = []
     @Published var frozenDates: [DateComponents] = []
     
+    // آخر مرة سجّل فيها اليوزر (Learned أو Freeze)
+    private var lastActivityDate: Date?
+    
     // تاريخ اليوم (سنة، شهر، يوم) عشان نحفظه
     private var todayComponents: DateComponents {
         Calendar(identifier: .gregorian).dateComponents([.year, .month, .day], from: Date())
@@ -24,6 +27,14 @@ final class ActivityViewModel: ObservableObject {
 
     // الحد الأقصى للـ Freezes (2 للأسبوع، نربطه بالهدف لاحقاً)
     @Published var maxFreezes = 2
+    
+    // عدد الأيام اللي لازم نتعلمها عشان يكتمل الهدف
+    @Published var goalDays = 7
+
+    // هل اكتمل الهدف؟ (أيام التعلم وصلت لطول الهدف)
+    var isGoalCompleted: Bool {
+        learnedDays >= goalDays
+    }
 
     // هل زر Freeze شغّال؟ لو ما استخدمنا Freeze اليوم، وباقي Freezes
     var canFreeze: Bool {
@@ -76,23 +87,24 @@ final class ActivityViewModel: ObservableObject {
     //* إذا الشرط غلط، "وقّف وما تسوي شي" وهذا يمنع تسجيل الهدف نفس اليوم مرتين*
     //
     //حفظ اليوم لما تضغطين Log as Learned
+    // حفظ اليوم لما تفعلين Log as Learned
     func logAsLearned() {
         guard !isLoggedToday else { return }
         isLoggedToday = true
         learnedDays += 1
         learnedDates.append(todayComponents)
+        lastActivityDate = Date()
     }
 
     // لما المستخدم يضغط Freeze
-    //
-    //احفظ يوم الـ Freeze
     func freezeToday() {
         guard canFreeze else { return }
         isFreezedToday = true
         freezedDays += 1
         frozenDates.append(todayComponents)
+        lastActivityDate = Date()
     }
-    
+
     // لما اليوزر يحدّث هدفه، السلسلة تبدأ من جديد
     func resetStreak() {
         learnedDays = 0
@@ -101,5 +113,23 @@ final class ActivityViewModel: ObservableObject {
         isFreezedToday = false
         learnedDates = []
         frozenDates = []
+        lastActivityDate = nil
+    }
+
+    // نفحص كل ما تنفتح الشاشة: هل يوم جديد؟ هل عدّت 32 ساعة؟
+    func checkStreak() {
+        guard let last = lastActivityDate else { return }
+
+        // يوم جديد (بعد 12 صباحاً): الأزرار ترجع تشتغل
+        if !Calendar.current.isDateInToday(last) {
+            isLoggedToday = false
+            isFreezedToday = false
+        }
+
+        // أكثر من 32 ساعة بدون نشاط: السلسلة تنكسر
+        let hours = Date().timeIntervalSince(last) / 3600
+        if hours > 32 {
+            resetStreak()
+        }
     }
 }
