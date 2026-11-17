@@ -8,6 +8,7 @@ import SwiftUI
 struct LearningGoalView: View {
     // نستخدم نفس الـ ViewModel (مو نسخة جديدة)
     @ObservedObject var viewModel: GoalViewModel
+    @ObservedObject var activityViewModel: ActivityViewModel
     //الشاشة تستقبل الـ ViewModel من برا، ما تنشئه هي. وبكذا Onboarding وهذي الشاشة يشاركون نفس البيانات
     
     @State private var showAlert = false
@@ -63,8 +64,7 @@ struct LearningGoalView: View {
                 
                 Button("Dismiss", role: .cancel) { }
                 Button("Update") {
-                    // نكتب فعل التحديث لاحقاً (تصفير الـ Streak)
-                }
+                    activityViewModel.resetStreak()                }
             } message: {
                 Text("If you update now, your streak will start over.")
             }
@@ -73,5 +73,5 @@ struct LearningGoalView: View {
 }
 
 #Preview {
-    LearningGoalView(viewModel: GoalViewModel())
+    LearningGoalView(viewModel: GoalViewModel(), activityViewModel: ActivityViewModel())
 }

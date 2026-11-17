@@ -92,4 +92,14 @@ final class ActivityViewModel: ObservableObject {
         freezedDays += 1
         frozenDates.append(todayComponents)
     }
+    
+    // لما اليوزر يحدّث هدفه، السلسلة تبدأ من جديد
+    func resetStreak() {
+        learnedDays = 0
+        freezedDays = 0
+        isLoggedToday = false
+        isFreezedToday = false
+        learnedDates = []
+        frozenDates = []
+    }
 }

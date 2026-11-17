@@ -149,9 +149,10 @@ struct ActivityView: View {
         }
         .padding()
         .navigationDestination(isPresented: $showGoal) {
-            LearningGoalView(viewModel: goalViewModel)
+            LearningGoalView(viewModel: goalViewModel, activityViewModel: viewModel)
         }
         .navigationDestination(isPresented: $showCalendar) {
+  
             //نمرر القوائم للتقويم
             CalendarView(learnedDays: viewModel.learnedDates, frozenDays: viewModel.frozenDates)        }
     }
