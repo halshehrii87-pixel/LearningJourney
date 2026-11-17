@@ -18,7 +18,8 @@ final class GoalViewModel: ObservableObject {
         default: return 96
         }
     }
-    // كم يوم لازم نتعلم عشان يكتمل الهدف
+    // كم يوم لازم يتعلم عشان يكتمل الهدف
+    // هنا اعدل لتست الارقام عشان اشوف نتيجه القول 
     var goalDays: Int {
         switch selectedDuration {
         case "Week": return 7

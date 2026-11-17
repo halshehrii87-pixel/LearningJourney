@@ -110,40 +110,50 @@ struct ActivityView: View {
             }
             Spacer()
 
-            // الدايرة الكبيرة: Log as Learned
-            //استدعاءglassEffect
-            Button {
-                viewModel.logAsLearned()
-            } label: {
-                Text(viewModel.logTitle)
-                    .font(.headline)
-                    .foregroundStyle(viewModel.isLoggedToday ? .gray : .white)
-                    .frame(width: 273, height: 273)
-                    .background(viewModel.isLoggedToday ? Color.gray.opacity(0.25) : Color("AppOrange"), in: Circle())
-                    .glassEffect(.regular, in: Circle())
-            }
-            .buttonStyle(.plain)
-            .disabled(viewModel.isLoggedToday)
-            .frame(maxWidth: .infinity)
-            //هنا سويت ربط وحذفت الكود الي قبل
-            
-            // زر Freeze
-            //هنا حجم الزر تعدل واضفت العرض حقه
-            Button {
-                viewModel.freezeToday()
-            } label: {
-                Text(viewModel.freezeTitle)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-            }
-            .glassButton(selected: viewModel.canFreeze, tint: .cyan)
-            .disabled(!viewModel.canFreeze)
-            .frame(maxWidth: .infinity)
-
-            Text(viewModel.freezeStatus)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            if viewModel.isGoalCompleted {
+                GoalCompletedView {
+                    showGoal = true
+                }
+            } else if viewModel.isGoalFailed {
+                GoalNotMetView {
+                    showGoal = true
+                }
+            } else {
+                // الدايرة الكبيرة: Log as Learned
+                //استدعاءglassEffect
+                Button {
+                    viewModel.logAsLearned()
+                } label: {
+                    Text(viewModel.logTitle)
+                        .font(.headline)
+                        .foregroundStyle(viewModel.isLoggedToday ? .gray : .white)
+                        .frame(width: 273, height: 273)
+                        .background(viewModel.isLoggedToday ? Color.gray.opacity(0.25) : Color("AppOrange"), in: Circle())
+                        .glassEffect(.regular, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .disabled(viewModel.isLoggedToday)
                 .frame(maxWidth: .infinity)
+                //هنا سويت ربط وحذفت الكود الي قبل
+                
+                // زر Freeze
+                //هنا حجم الزر تعدل واضفت العرض حقه
+                Button {
+                    viewModel.freezeToday()
+                } label: {
+                    Text(viewModel.freezeTitle)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                }
+                .glassButton(selected: viewModel.canFreeze, tint: .cyan)
+                .disabled(!viewModel.canFreeze)
+                .frame(maxWidth: .infinity)
+                
+                Text(viewModel.freezeStatus)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity)
+            }
             
             Spacer()
         }
@@ -193,4 +203,83 @@ struct StatCard: View {
 }
 #Preview {
     ActivityView(goalViewModel: GoalViewModel())
+}
+
+
+// شاشة "اكتمل الهدف" (تظهر بدل الدايرة وزر Freeze)
+struct GoalCompletedView: View {
+    // الزر يخبر الشاشة الأم إن المستخدم يبي هدف جديد
+    var onSetGoal: () -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            // الأيقونة (SF Symbol) بدل الإيموجي
+            Image(systemName: "hands.sparkles.fill")
+                .font(.system(size: 44))
+                .foregroundStyle(Color("AppOrange"))
+                .padding(.bottom, 12)
+
+            Text("Well done!")
+                .font(.title2)
+                .bold()
+
+            Text("Ready for your next goal?")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+
+            Button {
+                onSetGoal()
+                // هنا ابغى تغيير الحجم للخط حقSet a goal
+            } label: {
+                Label("Set a goal", systemImage: "pencil.and.outline")
+                    .font(.body)
+                    .foregroundStyle(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+            }
+            .glassButton(selected: true, tint: Color("AppOrange"))
+            .padding(.top, 48)
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
+
+// شاشة "اكتمل الهدف" (تظهر بدل الدايرة وزر Freeze)
+struct GoalNotMetView: View {
+    // الزر يخبر الشاشة الأم إن المستخدم يبي هدف جديد
+    var onSetGoal: () -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            // الأيقونة (SF Symbol) بدل الإيموجي
+            Image(systemName: "xmark.seal")
+                .font(.system(size: 44))
+                .foregroundStyle(Color("AppOrange"))
+                .padding(.bottom, 12)
+
+            Text("You didn't reach your goal this time.")
+                .font(.title2)
+                .bold()
+
+            Text("Want to set another goal?")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+
+            Button {
+                onSetGoal()
+                // هنا ابغى تغيير الحجم للخط حقSet a goal
+            } label: {
+                Label("Set a goal", systemImage: "pencil.and.outline")
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+            }
+            .glassButton(selected: true, tint: Color("AppOrange"))
+            .padding(.top, 48)
+        }
+        .frame(maxWidth: .infinity)
+    }
 }

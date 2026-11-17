@@ -30,6 +30,9 @@ final class ActivityViewModel: ObservableObject {
     
     // عدد الأيام اللي لازم نتعلمها عشان يكتمل الهدف
     @Published var goalDays = 7
+    
+    // هل فشل المستخدم في تحقيق الهدف؟ (انكسرت السلسلة قبل ما يكتمل)
+    @Published var isGoalFailed = false
 
     // هل اكتمل الهدف؟ (أيام التعلم وصلت لطول الهدف)
     var isGoalCompleted: Bool {
@@ -114,6 +117,7 @@ final class ActivityViewModel: ObservableObject {
         learnedDates = []
         frozenDates = []
         lastActivityDate = nil
+        isGoalFailed = false
     }
 
     // نفحص كل ما تنفتح الشاشة: هل يوم جديد؟ هل عدّت 32 ساعة؟
@@ -127,9 +131,11 @@ final class ActivityViewModel: ObservableObject {
         }
 
         // أكثر من 32 ساعة بدون نشاط: السلسلة تنكسر
+        // عشان التست بخليها ١٠ ثواني 0.003
         let hours = Date().timeIntervalSince(last) / 3600
-        if hours > 32 {
+        if hours > 32 && !isGoalCompleted {
             resetStreak()
+            isGoalFailed = true
         }
     }
 }
