@@ -27,4 +27,8 @@ final class GoalViewModel: ObservableObject {
         default: return 365
         }
     }
+    // هل الهدف صالح؟ (لازم المستخدم يكتب هدفه، والمسافات الفاضية ما تنحسب)
+    var isGoalValid: Bool {
+        !subject.trimmingCharacters(in: .whitespaces).isEmpty
+    }
 }

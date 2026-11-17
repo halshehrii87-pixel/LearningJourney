@@ -57,6 +57,7 @@ struct LearningGoalView: View {
                         Image(systemName: "checkmark")
                     }
                     .glassButton()
+                    .disabled(!viewModel.isGoalValid)
                 }
             }
             .alert("Update goal", isPresented: $showAlert) {

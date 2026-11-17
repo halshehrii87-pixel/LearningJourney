@@ -35,7 +35,7 @@ struct ActivitiesView: View {
                     // نكرر الرسم لكل شهر من الـ12 شهر
                     ForEach(viewModel.months, id: \.self) { month in
                         monthSection(month)   // يرسم شهر واحد (معرّف تحت)
-                        Divider()             // خط رفيع يفصل بين الأشهر          // خط رفيع يفصل بين الأشهر
+                        Divider()             // خط رفيع يفصل بين الأشهرش          // خط رفيع يفصل بين الأشهر
                     }
                 }
                 .padding(.horizontal)   // مسافة يمين ويسار الشاشة

@@ -66,6 +66,7 @@ struct OnboardingView: View {
              }
              .glassButton()
              .frame(maxWidth: .infinity)
+             .disabled(!viewModel.isGoalValid)
              
              Text("You can edit your desire later")
                  .font(.system(size: 12))
