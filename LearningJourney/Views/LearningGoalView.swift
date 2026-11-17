@@ -12,6 +12,7 @@ struct LearningGoalView: View {
     //الشاشة تستقبل الـ ViewModel من برا، ما تنشئه هي. وبكذا Onboarding وهذي الشاشة يشاركون نفس البيانات
     
     @State private var showAlert = false
+    @Environment(\.dismiss) private var dismiss
     //صندوق يحفظ "هل التنبيه ظاهر الحين؟". يبدأ false.
     
 
@@ -64,7 +65,11 @@ struct LearningGoalView: View {
                 
                 Button("Dismiss", role: .cancel) { }
                 Button("Update") {
-                    activityViewModel.resetStreak()                }
+                    activityViewModel.resetStreak()
+                    
+                    // هنا عشان ترجع صفحه تحديث القول لصفحت الاساسيه بدون ما اضغط زر السهم 
+                    dismiss()
+                }
             } message: {
                 Text("If you update now, your streak will start over.")
             }
