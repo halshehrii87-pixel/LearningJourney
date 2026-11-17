@@ -148,6 +148,11 @@ struct ActivityView: View {
             Spacer()
         }
         .padding()
+        .onAppear {
+            viewModel.maxFreezes = goalViewModel.maxFreezes
+            //هنا عدلت تحديثات الفريز يعني لكل شهر كم يكون فيه تجميد
+        }
+        
         .navigationDestination(isPresented: $showGoal) {
             LearningGoalView(viewModel: goalViewModel, activityViewModel: viewModel)
         }

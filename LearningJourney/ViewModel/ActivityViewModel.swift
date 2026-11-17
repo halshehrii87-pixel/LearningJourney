@@ -23,7 +23,7 @@ final class ActivityViewModel: ObservableObject {
     }
 
     // الحد الأقصى للـ Freezes (2 للأسبوع، نربطه بالهدف لاحقاً)
-    let maxFreezes = 2
+    @Published var maxFreezes = 2
 
     // هل زر Freeze شغّال؟ لو ما استخدمنا Freeze اليوم، وباقي Freezes
     var canFreeze: Bool {
