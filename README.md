@@ -15,7 +15,6 @@ A simple iOS app that helps you build a learning habit. Set a goal, log each day
 
 ## Screenshots
 
-(Screenshots coming soon)
 <img width="1262" height="848" alt="PHOTO-2026-11-22-10-11-43" src="https://github.com/user-attachments/assets/c537b99f-46fb-4a04-808f-b4d281eef1aa" />
 
 
